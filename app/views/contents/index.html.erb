@@ -1,6 +1,4 @@
-<%= link_to 'New Content', new_content_path%>
-
-<h1>contents</h1>
+<h1>Contents</h1>
 
 <%= form_tag(contents_path, method: :get) do %>
   <div class='form-group'>
@@ -13,13 +11,32 @@
   </div>
 <% end %>
   <BR>
+<%= link_to 'New Content', new_content_path, class: "btn btn-primary" %>
+  <BR>
   <BR>
 <% @contents.each do |content| %>
-  <%= link_to 'Show', content_path(content) %>
-  <%= link_to 'Edit', edit_content_path(content) %>
-  <%= link_to 'Destroy', content_path(content), method: :delete, data: {confirm: 'Are you sure?'} %>
-  <strong>Title</strong>: <%= content.title %>
-  <strong>Description</strong>: <%= content.description %>
-  <strong>Tags</strong>: <%= content.tags.pluck(:name).join(', ') %>
+  <table class="table table-hover">
+    <thead>
+      <tr >
+        <th scope="col" style='width: 300px' class= "navbar-brand">Title</th>
+        <th scope="col" style='width: 300px' class= "navbar-brand">Description</th>
+        <th scope="col" style='width: 300px' class= "navbar-brand">Tags</th>
+      </tr>
+    </thead>
+    <td scope="row">
+      <%= content.title %>
+    </td>
+    <td>
+      <%= truncate(content.description, length: 15) %>
+    </td>
+    <td>
+      <%= content.tags.pluck(:name).join(', ') %>
+    </td>
+    <td>
+      <%= link_to 'Show', content_path(content), class: "navbar-brand" %>
+      <%= link_to 'Edit', edit_content_path(content), class: "navbar-brand" %>
+      <%= link_to 'Destroy', content_path(content), method: :delete, data: {confirm: 'Are you sure?'}, class: "navbar-brand" %>
+    </td>
+  </table>
   <BR>
 <% end %>
